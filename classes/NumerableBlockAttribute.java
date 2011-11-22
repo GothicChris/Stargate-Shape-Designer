@@ -10,7 +10,7 @@ package classes;
  */
 public class NumerableBlockAttribute extends BlockAttribute {
     
-    private Integer number;
+    private Integer number = 1;
 
     public NumerableBlockAttribute() {
     }
@@ -27,7 +27,7 @@ public class NumerableBlockAttribute extends BlockAttribute {
     public void setNumber(Integer number) {
         this.number = number;
     }
-
+    
     @Override
     public String toString() {
         String returnString = ":";

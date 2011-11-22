@@ -1,12 +1,17 @@
 package stargate;
 
 import classes.AttributedBlockElement;
+import classes.BlockAttribute;
 import classes.BlockElement;
 import classes.Field;
+import classes.NumerableBlockAttribute;
 import java.awt.Point;
 import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Iterator;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
+import javax.swing.JRadioButton;
 import javax.swing.JToggleButton;
 
 /*
@@ -538,27 +543,57 @@ public class StargateShapeDesigner extends javax.swing.JFrame {
         stargateBlockAttributes.add(signName);
         signName.setText("Schild mit Name");
         signName.setName("N"); // NOI18N
+        signName.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                arAttributeInBlockElement(evt);
+            }
+        });
 
         stargateBlockAttributes.add(activationSwitch);
         activationSwitch.setText("Aktivierungs Schalter");
         activationSwitch.setName("A"); // NOI18N
+        activationSwitch.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                arAttributeInBlockElement(evt);
+            }
+        });
 
         stargateBlockAttributes.add(signDialer);
         signDialer.setText("Ziel Auswahlschild");
         signDialer.setToolTipText("");
         signDialer.setName("D"); // NOI18N
+        signDialer.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                arAttributeInBlockElement(evt);
+            }
+        });
 
         stargateBlockAttributes.add(irisActivationSwitch);
         irisActivationSwitch.setText("Iris Aktivierungs Schalter");
         irisActivationSwitch.setName("IA"); // NOI18N
+        irisActivationSwitch.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                arAttributeInBlockElement(evt);
+            }
+        });
 
         stargateBlockAttributes.add(teleportPlayer);
         teleportPlayer.setText("Teleport Spieler");
         teleportPlayer.setName("EP"); // NOI18N
+        teleportPlayer.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                arAttributeInBlockElement(evt);
+            }
+        });
 
         stargateBlockAttributes.add(teleportMinecart);
         teleportMinecart.setText("Teleport Minecart");
         teleportMinecart.setName("EM"); // NOI18N
+        teleportMinecart.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                arAttributeInBlockElement(evt);
+            }
+        });
 
         light.setText("Light");
         light.setName("L"); // NOI18N
@@ -735,9 +770,9 @@ private void placeBlock(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_placeB
     try {
         fieldPanel.setBlockElement((BlockElement) (Class.forName("classes." + name).newInstance()), column, row);
     } catch (ClassNotFoundException cnfE) {
-        BlockElement blockelement = fieldPanel.getBlockElement(column, row);
-        System.out.println(blockelement.toString());
-        setAttributePanelVisibility(true, blockelement);
+        currentSelectedBlockElement = fieldPanel.getBlockElement(column, row);
+        System.out.println(currentSelectedBlockElement.toString());
+        setAttributePanelVisibility(true, currentSelectedBlockElement);
     } catch (IllegalAccessException iaE) {
         
     } catch (InstantiationException iE) {
@@ -757,16 +792,40 @@ private void placeBlock(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_placeB
             setStargateAttributeVisibility(b);
             setPortalAttributeVisibility(b);
             setAirAttributeVisibility(b);
-        } else if(blockElement.getName().equals("S")) {
+            
+        } else if("S".equals(blockElement.getName())) {
             setStargateAttributeVisibility(b);
             AttributedBlockElement sBlock = (AttributedBlockElement) blockElement;
-            sBlock.getAttributeList();
+            HashMap<String, BlockAttribute> attributeMap = sBlock.getAttributeMap();
+            
+            if(!attributeMap.isEmpty()) {
+                Iterator<String> it = attributeMap.keySet().iterator();
+                while(it.hasNext()) {
+                    BlockAttribute attribute = attributeMap.get(it.next());
+                    if("L".equals(attribute.getName())) {
+                        int i = ((NumerableBlockAttribute)attribute).getNumber();
+                        light.setSelected(true);
+                        lightNumber.setText("" + i);
+                    } else {
+                        String name = attribute.getName();
+                        Enumeration em = stargateBlockAttributes.getElements();
+                        while(em.hasMoreElements()) {
+                            JRadioButton attributeButton = (JRadioButton) em.nextElement();
+                            if(attributeButton.getName().equals(name)) {
+                                attributeButton.setSelected(true);
+                            }
+                        }
+                    }
+                    
+                }
+            }
             
         } else if(blockElement.getName().equals("P")) {
             setPortalAttributeVisibility(b);
         } else if(blockElement.getName().equals("I")) {
             setAirAttributeVisibility(b);
         }
+        
         
     }
     
@@ -776,9 +835,9 @@ private void placeBlock(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_placeB
         signDialer.setVisible(b);
         irisActivationSwitch.setVisible(b);
         teleportMinecart.setVisible(b);
+        teleportPlayer.setVisible(b);
         light.setVisible(b);
         lightNumber.setVisible(b);
-        teleportPlayer.setVisible(b);
     }
     
     private void setPortalAttributeVisibility(boolean b) {
@@ -807,6 +866,20 @@ private void saveAttributesButton(java.awt.event.ActionEvent evt) {//GEN-FIRST:e
     /* Nach dem Speichern, die Attribute wieder ausblenden.*/
     setAttributePanelVisibility(false, null);
 }//GEN-LAST:event_saveAttributesButton
+
+/**
+ * ADD and REMOVE Attribute Block Element.
+ * @param evt 
+ */
+private void arAttributeInBlockElement(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_arAttributeInBlockElement
+// TODO add your handling code here:
+    JRadioButton radiobutton = (JRadioButton) evt.getSource();
+    if(radiobutton.isSelected()) {
+        ((AttributedBlockElement)currentSelectedBlockElement).putAttribute(new BlockAttribute(radiobutton.getName()));
+    } else {
+        ((AttributedBlockElement)currentSelectedBlockElement).removeAttribute(radiobutton.getName());
+    }
+}//GEN-LAST:event_arAttributeInBlockElement
 
     private String getSelectedButtonName(ButtonGroup bg) {
         
@@ -840,6 +913,8 @@ private void saveAttributesButton(java.awt.event.ActionEvent evt) {//GEN-FIRST:e
     }
 
     private Settings stargateSettings;
+    
+    private BlockElement currentSelectedBlockElement;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel AttributePanel;

@@ -4,7 +4,7 @@
  */
 package classes;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 /**
@@ -13,33 +13,33 @@ import java.util.Iterator;
  */
 public class AttributedBlockElement extends BlockElement {
     
-    private BlockAttribute singleAttribute;
-    
-    private ArrayList<BlockAttribute> attributeList;
+    private HashMap<String, BlockAttribute> attributeMap;
 
     public AttributedBlockElement() {
-        attributeList = new ArrayList<BlockAttribute>();
+        attributeMap = new HashMap<String, BlockAttribute>();
     }
 
-    public ArrayList<BlockAttribute> getAttributeList() {
-        return attributeList;
+    public HashMap<String, BlockAttribute> getAttributeMap() {
+        return attributeMap;
     }
 
-    public void setAttributeList(BlockAttribute blockattribut) {
-        this.attributeList.add(blockattribut);
+    public void putAttribute(BlockAttribute blockattribut) {
+        this.attributeMap.put(blockattribut.name, blockattribut);
     }
     
-    
+    public void removeAttribute(String name) {
+        this.attributeMap.remove(name);
+    }
     
     @Override
     public String toString() {
         String returnString = "[";
         returnString = returnString.concat(name);
         
-        Iterator<BlockAttribute> attributeIterator = attributeList.iterator();
+        Iterator<String> attributeIterator = attributeMap.keySet().iterator();
         
         while(attributeIterator.hasNext()) {
-            returnString = returnString.concat(attributeIterator.next().toString());
+            returnString = returnString.concat(attributeMap.get(attributeIterator.next()).toString());
         }
         returnString = returnString.concat("]");
         
