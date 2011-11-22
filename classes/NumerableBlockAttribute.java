@@ -15,6 +15,11 @@ public class NumerableBlockAttribute extends BlockAttribute {
     public NumerableBlockAttribute() {
     }
 
+    public NumerableBlockAttribute(String name, Integer number) {
+        super(name);
+        this.number = number;
+    }
+    
     public Integer getNumber() {
         return number;
     }

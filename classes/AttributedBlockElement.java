@@ -4,7 +4,6 @@
  */
 package classes;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -25,6 +24,12 @@ public class AttributedBlockElement extends BlockElement {
     public ArrayList<BlockAttribute> getAttributeList() {
         return attributeList;
     }
+
+    public void setAttributeList(BlockAttribute blockattribut) {
+        this.attributeList.add(blockattribut);
+    }
+    
+    
     
     @Override
     public String toString() {

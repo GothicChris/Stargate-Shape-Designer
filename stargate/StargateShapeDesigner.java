@@ -1,20 +1,13 @@
 package stargate;
 
+import classes.AttributedBlockElement;
 import classes.BlockElement;
 import classes.Field;
-import com.sun.org.apache.bcel.internal.util.Class2HTML;
-import java.awt.Color;
 import java.awt.Point;
-import java.awt.event.ItemEvent;
 import java.util.Enumeration;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.AbstractButton;
-import javax.swing.ButtonModel;
-import javax.swing.JOptionPane;
+import javax.swing.ButtonGroup;
 import javax.swing.JToggleButton;
-import javax.swing.border.LineBorder;
-import sun.reflect.Reflection;
 
 /*
  * To change this template, choose Tools | Templates
@@ -37,6 +30,7 @@ public class StargateShapeDesigner extends javax.swing.JFrame {
     public StargateShapeDesigner() {
         initComponents();
         stargateSettings = new Settings();
+        setAttributePanelVisibility(false, null);
     }
 
     /** This method is called from within the constructor to
@@ -49,7 +43,8 @@ public class StargateShapeDesigner extends javax.swing.JFrame {
     private void initComponents() {
 
         blocks = new stargate.unselectedButtonGroup();
-        layers = new stargate.unselectedButtonGroup();
+        stargateBlockAttributes = new stargate.unselectedButtonGroup();
+        layers = new javax.swing.ButtonGroup();
         EinstellungenTab = new javax.swing.JTabbedPane();
         OptionenPanel = new javax.swing.JPanel();
         stargate_name_label = new javax.swing.JLabel();
@@ -105,16 +100,16 @@ public class StargateShapeDesigner extends javax.swing.JFrame {
         Layer3 = new javax.swing.JToggleButton();
         Layer2 = new javax.swing.JToggleButton();
         Layer1 = new javax.swing.JToggleButton();
-        jPanel1 = new javax.swing.JPanel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
-        jRadioButton4 = new javax.swing.JRadioButton();
-        jRadioButton5 = new javax.swing.JRadioButton();
-        jRadioButton6 = new javax.swing.JRadioButton();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        AttributePanel = new javax.swing.JPanel();
+        signName = new javax.swing.JRadioButton();
+        activationSwitch = new javax.swing.JRadioButton();
+        signDialer = new javax.swing.JRadioButton();
+        irisActivationSwitch = new javax.swing.JRadioButton();
+        teleportPlayer = new javax.swing.JRadioButton();
+        teleportMinecart = new javax.swing.JRadioButton();
+        light = new javax.swing.JCheckBox();
+        lightNumber = new javax.swing.JTextField();
+        saveAttributesButton = new javax.swing.JButton();
         LayerText = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         TextArea = new javax.swing.JTextArea();
@@ -293,7 +288,7 @@ public class StargateShapeDesigner extends javax.swing.JFrame {
         );
         fieldPanelLayout.setVerticalGroup(
             fieldPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 352, Short.MAX_VALUE)
+            .addGap(0, 351, Short.MAX_VALUE)
         );
 
         blocks.add(stargateBlock);
@@ -540,83 +535,100 @@ public class StargateShapeDesigner extends javax.swing.JFrame {
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
-        jRadioButton1.setText("Schild mit Name");
-        jRadioButton1.setName("N"); // NOI18N
+        stargateBlockAttributes.add(signName);
+        signName.setText("Schild mit Name");
+        signName.setName("N"); // NOI18N
 
-        jRadioButton2.setText("Ziel Auswahlschild");
-        jRadioButton2.setToolTipText("");
-        jRadioButton2.setName("D"); // NOI18N
+        stargateBlockAttributes.add(activationSwitch);
+        activationSwitch.setText("Aktivierungs Schalter");
+        activationSwitch.setName("A"); // NOI18N
 
-        jRadioButton3.setText("Iris Aktivierungs Schalter");
-        jRadioButton3.setName("IA"); // NOI18N
+        stargateBlockAttributes.add(signDialer);
+        signDialer.setText("Ziel Auswahlschild");
+        signDialer.setToolTipText("");
+        signDialer.setName("D"); // NOI18N
 
-        jRadioButton4.setText("Aktivierungs Schalter");
-        jRadioButton4.setName("A"); // NOI18N
+        stargateBlockAttributes.add(irisActivationSwitch);
+        irisActivationSwitch.setText("Iris Aktivierungs Schalter");
+        irisActivationSwitch.setName("IA"); // NOI18N
 
-        jRadioButton5.setText("Teleport Spieler");
-        jRadioButton5.setName("EP"); // NOI18N
+        stargateBlockAttributes.add(teleportPlayer);
+        teleportPlayer.setText("Teleport Spieler");
+        teleportPlayer.setName("EP"); // NOI18N
 
-        jRadioButton6.setText("Teleport Minecart");
-        jRadioButton6.setName("EM"); // NOI18N
+        stargateBlockAttributes.add(teleportMinecart);
+        teleportMinecart.setText("Teleport Minecart");
+        teleportMinecart.setName("EM"); // NOI18N
 
-        jCheckBox1.setText("Light");
-        jCheckBox1.setName("L"); // NOI18N
+        light.setText("Light");
+        light.setName("L"); // NOI18N
+        light.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lightEnabledDisabled(evt);
+            }
+        });
 
-        jTextField1.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        jTextField1.setText("1");
-        jTextField1.setName("lightnumber"); // NOI18N
+        lightNumber.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        lightNumber.setText("1");
+        lightNumber.setEnabled(false);
+        lightNumber.setName("lightnumber"); // NOI18N
 
-        jButton1.setText("speichern");
-        jButton1.setName("saveAttribute"); // NOI18N
+        saveAttributesButton.setText("speichern");
+        saveAttributesButton.setName("saveAttribute"); // NOI18N
+        saveAttributesButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveAttributesButton(evt);
+            }
+        });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout AttributePanelLayout = new javax.swing.GroupLayout(AttributePanel);
+        AttributePanel.setLayout(AttributePanelLayout);
+        AttributePanelLayout.setHorizontalGroup(
+            AttributePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(AttributePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jRadioButton3)
+                .addGroup(AttributePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(AttributePanelLayout.createSequentialGroup()
+                        .addComponent(irisActivationSwitch)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 180, Short.MAX_VALUE)
-                        .addComponent(jButton1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jRadioButton1)
-                            .addComponent(jRadioButton4)
-                            .addComponent(jRadioButton2))
+                        .addComponent(saveAttributesButton))
+                    .addGroup(AttributePanelLayout.createSequentialGroup()
+                        .addGroup(AttributePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(signName)
+                            .addComponent(activationSwitch)
+                            .addComponent(signDialer))
                         .addGap(52, 52, 52)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jCheckBox1)
+                        .addGroup(AttributePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(AttributePanelLayout.createSequentialGroup()
+                                .addComponent(light)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jRadioButton6)
-                            .addComponent(jRadioButton5))))
+                                .addComponent(lightNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(teleportMinecart)
+                            .addComponent(teleportPlayer))))
                 .addContainerGap())
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        AttributePanelLayout.setVerticalGroup(
+            AttributePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(AttributePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton5))
+                .addGroup(AttributePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(signName)
+                    .addComponent(teleportPlayer))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton4)
-                    .addComponent(jRadioButton6))
+                .addGroup(AttributePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(activationSwitch)
+                    .addComponent(teleportMinecart))
                 .addGap(0, 0, 0)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton2)
-                    .addComponent(jCheckBox1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(AttributePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(signDialer)
+                    .addComponent(light)
+                    .addComponent(lightNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton3)
-                .addContainerGap(15, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(80, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(irisActivationSwitch)
+                .addContainerGap(14, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AttributePanelLayout.createSequentialGroup()
+                .addContainerGap(79, Short.MAX_VALUE)
+                .addComponent(saveAttributesButton)
                 .addContainerGap())
         );
 
@@ -630,7 +642,7 @@ public class StargateShapeDesigner extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, ZeichenPanelLayout.createSequentialGroup()
                         .addComponent(BlockPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(AttributePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(LayerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 806, Short.MAX_VALUE)
@@ -642,7 +654,7 @@ public class StargateShapeDesigner extends javax.swing.JFrame {
             .addGroup(ZeichenPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(ZeichenPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(AttributePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(ZeichenPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(BlockPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(LayerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -718,14 +730,14 @@ private void placeBlock(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_placeB
     int column = (int) (p.x / fieldPanel.getBlocksize());
     int row = (int) (p.y / fieldPanel.getBlocksize());
     
-    String name = getSelectedButtonName();
+    String name = getSelectedButtonName(blocks);
     
     try {
         fieldPanel.setBlockElement((BlockElement) (Class.forName("classes." + name).newInstance()), column, row);
     } catch (ClassNotFoundException cnfE) {
-        System.out.println("Kein Button ausgewählt");
         BlockElement blockelement = fieldPanel.getBlockElement(column, row);
         System.out.println(blockelement.toString());
+        setAttributePanelVisibility(true, blockelement);
     } catch (IllegalAccessException iaE) {
         
     } catch (InstantiationException iE) {
@@ -733,15 +745,76 @@ private void placeBlock(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_placeB
     }
 }//GEN-LAST:event_placeBlock
 
+    /**
+     * Anzeigen/Ausblenden der Attribute für einen bestimmten Block.
+     * @param b anzeigen/ausblenden.
+     * @param blockElement von welchem Element die Attribute angezeuigt werden sollen.
+     */
+    private void setAttributePanelVisibility(boolean b, BlockElement blockElement) {
+        //TODO attribute setzten oder nicht setzen.
+        saveAttributesButton.setVisible(b);
+        if(blockElement == null) {
+            setStargateAttributeVisibility(b);
+            setPortalAttributeVisibility(b);
+            setAirAttributeVisibility(b);
+        } else if(blockElement.getName().equals("S")) {
+            setStargateAttributeVisibility(b);
+            AttributedBlockElement sBlock = (AttributedBlockElement) blockElement;
+            sBlock.getAttributeList();
+            
+        } else if(blockElement.getName().equals("P")) {
+            setPortalAttributeVisibility(b);
+        } else if(blockElement.getName().equals("I")) {
+            setAirAttributeVisibility(b);
+        }
+        
+    }
+    
+    private void setStargateAttributeVisibility(boolean b) {
+        signName.setVisible(b);
+        activationSwitch.setVisible(b);
+        signDialer.setVisible(b);
+        irisActivationSwitch.setVisible(b);
+        teleportMinecart.setVisible(b);
+        light.setVisible(b);
+        lightNumber.setVisible(b);
+        teleportPlayer.setVisible(b);
+    }
+    
+    private void setPortalAttributeVisibility(boolean b) {
+        
+    }
+    
+    private void setAirAttributeVisibility(boolean b) {
+        
+    }
+    
+private void lightEnabledDisabled(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lightEnabledDisabled
+// TODO add your handling code here:
+    lightNumber.setEnabled(!lightNumber.isEnabled());
+}//GEN-LAST:event_lightEnabledDisabled
 
+/**
+ * Speichert die gewählten Attribute.
+ * @param evt 
+ */
+private void saveAttributesButton(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveAttributesButton
+// TODO add your handling code here:
+    /* Name des selectierten Attributes holen.*/
+    String attributeName = getSelectedButtonName(stargateBlockAttributes);
+    System.out.println(attributeName);
+    
+    /* Nach dem Speichern, die Attribute wieder ausblenden.*/
+    setAttributePanelVisibility(false, null);
+}//GEN-LAST:event_saveAttributesButton
 
-    private String getSelectedButtonName() {
+    private String getSelectedButtonName(ButtonGroup bg) {
         
         String returnString = "";
         
         boolean isFound = false;
         
-        Enumeration<AbstractButton> blockButtons = blocks.getElements();
+        Enumeration<AbstractButton> blockButtons = bg.getElements();
         
         while(blockButtons.hasMoreElements() && !isFound) {
             JToggleButton button = (JToggleButton) blockButtons.nextElement();
@@ -769,6 +842,7 @@ private void placeBlock(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_placeB
     private Settings stargateSettings;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel AttributePanel;
     private javax.swing.JPanel BlockPanel;
     private javax.swing.JTabbedPane EinstellungenTab;
     private javax.swing.JTextField GateName;
@@ -788,17 +862,17 @@ private void placeBlock(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_placeB
     private javax.swing.JPanel OptionenPanel;
     private javax.swing.JTextArea TextArea;
     private javax.swing.JPanel ZeichenPanel;
+    private javax.swing.JRadioButton activationSwitch;
     private javax.swing.JComboBox active_material;
     private javax.swing.JToggleButton airBlock;
     private stargate.unselectedButtonGroup blocks;
     private javax.swing.JTextField fieldHeight;
     private stargate.FieldPanel fieldPanel;
     private javax.swing.JTextField fieldWidth;
+    private javax.swing.JRadioButton irisActivationSwitch;
     private javax.swing.JComboBox iris_material;
     private javax.swing.JLabel iris_material_label;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton4;
-    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -810,19 +884,13 @@ private void placeBlock(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_placeB
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JRadioButton jRadioButton4;
-    private javax.swing.JRadioButton jRadioButton5;
-    private javax.swing.JRadioButton jRadioButton6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JTextField jTextField1;
-    private stargate.unselectedButtonGroup layers;
+    private javax.swing.ButtonGroup layers;
+    private javax.swing.JCheckBox light;
+    private javax.swing.JTextField lightNumber;
     private javax.swing.JLabel light_material_label;
     private javax.swing.JComboBox light_ticks;
     private javax.swing.JLabel light_ticks_label;
@@ -833,12 +901,20 @@ private void placeBlock(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_placeB
     private javax.swing.JToggleButton redstoneGateActivatedBlock;
     private javax.swing.JToggleButton redstoneSignBlock;
     private javax.swing.JCheckBox redstone_activated;
+    private javax.swing.JButton saveAttributesButton;
+    private javax.swing.JRadioButton signDialer;
+    private javax.swing.JRadioButton signName;
     private javax.swing.JToggleButton stargateBlock;
+    private stargate.unselectedButtonGroup stargateBlockAttributes;
     private javax.swing.JComboBox stargate_material;
     private javax.swing.JLabel stargate_material_label;
     private javax.swing.JLabel stargate_name_label;
+    private javax.swing.JRadioButton teleportMinecart;
+    private javax.swing.JRadioButton teleportPlayer;
     private javax.swing.JComboBox woosh_ticks;
     private javax.swing.JLabel woosh_ticks_label;
     // End of variables declaration//GEN-END:variables
+
+    
 
 }

@@ -4,7 +4,9 @@
   <NonVisualComponents>
     <Component class="stargate.unselectedButtonGroup" name="blocks">
     </Component>
-    <Component class="stargate.unselectedButtonGroup" name="layers">
+    <Component class="stargate.unselectedButtonGroup" name="stargateBlockAttributes">
+    </Component>
+    <Component class="javax.swing.ButtonGroup" name="layers">
     </Component>
   </NonVisualComponents>
   <Properties>
@@ -364,7 +366,7 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="BlockPanel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="jPanel1" max="32767" attributes="0"/>
+                              <Component id="AttributePanel" max="32767" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="LayerPanel" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -380,7 +382,7 @@
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jPanel1" max="32767" attributes="1"/>
+                          <Component id="AttributePanel" max="32767" attributes="1"/>
                           <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
                               <Component id="BlockPanel" min="-2" max="-2" attributes="1"/>
                               <Component id="LayerPanel" alignment="0" max="32767" attributes="1"/>
@@ -411,7 +413,7 @@
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="352" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="351" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
               </Layout>
@@ -888,7 +890,7 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Container class="javax.swing.JPanel" name="jPanel1">
+            <Container class="javax.swing.JPanel" name="AttributePanel">
 
               <Layout>
                 <DimensionLayout dim="0">
@@ -897,25 +899,25 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jRadioButton3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="irisActivationSwitch" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace pref="180" max="32767" attributes="0"/>
-                                  <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="saveAttributesButton" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jRadioButton1" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jRadioButton4" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jRadioButton2" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="signName" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="activationSwitch" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="signDialer" alignment="0" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" alignment="0" attributes="0">
-                                          <Component id="jCheckBox1" min="-2" max="-2" attributes="0"/>
+                                          <Component id="light" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="jTextField1" min="-2" pref="31" max="-2" attributes="0"/>
+                                          <Component id="lightNumber" min="-2" pref="31" max="-2" attributes="0"/>
                                       </Group>
-                                      <Component id="jRadioButton6" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jRadioButton5" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="teleportMinecart" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="teleportPlayer" alignment="0" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -928,88 +930,113 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jRadioButton1" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jRadioButton5" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="signName" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="teleportPlayer" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jRadioButton4" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jRadioButton6" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="activationSwitch" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="teleportMinecart" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jRadioButton2" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jCheckBox1" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="signDialer" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="light" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lightNumber" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jRadioButton3" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="15" max="32767" attributes="0"/>
+                          <Component id="irisActivationSwitch" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="14" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace pref="80" max="32767" attributes="0"/>
-                          <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="79" max="32767" attributes="0"/>
+                          <Component id="saveAttributesButton" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
               </Layout>
               <SubComponents>
-                <Component class="javax.swing.JRadioButton" name="jRadioButton1">
+                <Component class="javax.swing.JRadioButton" name="signName">
                   <Properties>
+                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                      <ComponentRef name="stargateBlockAttributes"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Schild mit Name"/>
                     <Property name="name" type="java.lang.String" value="N" noResource="true"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JRadioButton" name="jRadioButton2">
+                <Component class="javax.swing.JRadioButton" name="activationSwitch">
                   <Properties>
+                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                      <ComponentRef name="stargateBlockAttributes"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Aktivierungs Schalter"/>
+                    <Property name="name" type="java.lang.String" value="A" noResource="true"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JRadioButton" name="signDialer">
+                  <Properties>
+                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                      <ComponentRef name="stargateBlockAttributes"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Ziel Auswahlschild"/>
                     <Property name="toolTipText" type="java.lang.String" value=""/>
                     <Property name="name" type="java.lang.String" value="D" noResource="true"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JRadioButton" name="jRadioButton3">
+                <Component class="javax.swing.JRadioButton" name="irisActivationSwitch">
                   <Properties>
+                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                      <ComponentRef name="stargateBlockAttributes"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Iris Aktivierungs Schalter"/>
                     <Property name="name" type="java.lang.String" value="IA" noResource="true"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JRadioButton" name="jRadioButton4">
+                <Component class="javax.swing.JRadioButton" name="teleportPlayer">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Aktivierungs Schalter"/>
-                    <Property name="name" type="java.lang.String" value="A" noResource="true"/>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JRadioButton" name="jRadioButton5">
-                  <Properties>
+                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                      <ComponentRef name="stargateBlockAttributes"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Teleport Spieler"/>
                     <Property name="name" type="java.lang.String" value="EP" noResource="true"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JRadioButton" name="jRadioButton6">
+                <Component class="javax.swing.JRadioButton" name="teleportMinecart">
                   <Properties>
+                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                      <ComponentRef name="stargateBlockAttributes"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Teleport Minecart"/>
                     <Property name="name" type="java.lang.String" value="EM" noResource="true"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JCheckBox" name="jCheckBox1">
+                <Component class="javax.swing.JCheckBox" name="light">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Light"/>
                     <Property name="name" type="java.lang.String" value="L" noResource="true"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="lightEnabledDisabled"/>
+                  </Events>
                 </Component>
-                <Component class="javax.swing.JTextField" name="jTextField1">
+                <Component class="javax.swing.JTextField" name="lightNumber">
                   <Properties>
                     <Property name="horizontalAlignment" type="int" value="11"/>
                     <Property name="text" type="java.lang.String" value="1"/>
+                    <Property name="enabled" type="boolean" value="false"/>
                     <Property name="name" type="java.lang.String" value="lightnumber" noResource="true"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JButton" name="jButton1">
+                <Component class="javax.swing.JButton" name="saveAttributesButton">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="speichern"/>
                     <Property name="name" type="java.lang.String" value="saveAttribute" noResource="true"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveAttributesButton"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
