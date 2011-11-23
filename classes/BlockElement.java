@@ -15,7 +15,14 @@ public class BlockElement {
     protected String name;
     
     protected Color color;
+    
+    protected Color borderColor;
 
+    public BlockElement() {
+        borderColor = Color.BLACK;
+    }
+
+    
     public void setName(String name) {
         this.name = name;
     }
@@ -37,4 +44,14 @@ public class BlockElement {
         
         return "[".concat(name).concat("]");
     }
+
+    public Color getBorderColor() {
+        return borderColor;
+    }
+
+    public void setBorderColor(Color borderColor) {
+        this.borderColor = borderColor;
+    }
+    
+    
 }

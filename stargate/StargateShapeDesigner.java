@@ -1,10 +1,13 @@
 package stargate;
 
+import classes.AirBlock;
 import classes.AttributedBlockElement;
 import classes.BlockAttribute;
 import classes.BlockElement;
 import classes.Field;
 import classes.NumerableBlockAttribute;
+import classes.StargateBlock;
+import java.awt.Color;
 import java.awt.Point;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -770,7 +773,10 @@ private void placeBlock(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_placeB
     try {
         fieldPanel.setBlockElement((BlockElement) (Class.forName("classes." + name).newInstance()), column, row);
     } catch (ClassNotFoundException cnfE) {
+        currentSelectedBlockElement.setBorderColor(Color.BLACK);
         currentSelectedBlockElement = fieldPanel.getBlockElement(column, row);
+        currentSelectedBlockElement.setBorderColor(Color.yellow);
+        fieldPanel.repaint();
         System.out.println(currentSelectedBlockElement.toString());
         setAttributePanelVisibility(true, currentSelectedBlockElement);
     } catch (IllegalAccessException iaE) {
@@ -914,7 +920,7 @@ private void arAttributeInBlockElement(java.awt.event.ItemEvent evt) {//GEN-FIRS
 
     private Settings stargateSettings;
     
-    private BlockElement currentSelectedBlockElement;
+    private BlockElement currentSelectedBlockElement = new AirBlock();
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel AttributePanel;

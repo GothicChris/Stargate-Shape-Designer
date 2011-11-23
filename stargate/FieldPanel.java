@@ -80,10 +80,11 @@ public class FieldPanel extends javax.swing.JPanel {
             startPoint.x = 0;
 
             for(int j = 0; j < field.getColumns(); j++) {
-                graphics.setColor(field.getBlockElement(j, i).getColor());
+                BlockElement block = field.getBlockElement(j, i);
+                graphics.setColor(block.getColor());
                 graphics.fillRect(startPoint.x, startPoint.y,
                         blockSize, blockSize);
-                graphics.setColor(Color.BLACK);
+                graphics.setColor(block.getBorderColor());
                 graphics.drawRect(startPoint.x, startPoint.y,
                         blockSize, blockSize);
 
@@ -136,4 +137,7 @@ public class FieldPanel extends javax.swing.JPanel {
         return field.getBlockElement(column, row);
     }
 
+    public void setBlockElementBorderColor() {
+        
+    }
 }
