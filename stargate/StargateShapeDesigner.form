@@ -11,7 +11,6 @@
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
-    <Property name="resizable" type="boolean" value="false"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -197,14 +196,13 @@
             <Component class="javax.swing.JComboBox" name="woosh_ticks">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="7">
+                  <StringArray count="6">
                     <StringItem index="0" value="0"/>
                     <StringItem index="1" value="1"/>
                     <StringItem index="2" value="2"/>
                     <StringItem index="3" value="3"/>
                     <StringItem index="4" value="4"/>
                     <StringItem index="5" value="5"/>
-                    <StringItem index="6" value=" "/>
                   </StringArray>
                 </Property>
                 <Property name="selectedIndex" type="int" value="3"/>
@@ -360,18 +358,19 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
+                  <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="BlockPanel" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="AttributePanel" max="32767" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jSeparator3" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="AttributePanel" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace pref="8" max="32767" attributes="0"/>
                               <Component id="LayerPanel" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="jSeparator3" alignment="0" pref="806" max="32767" attributes="0"/>
-                          <Component id="fieldPanel" alignment="0" max="32767" attributes="0"/>
+                          <Component id="fieldPanel" alignment="1" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -381,16 +380,17 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="AttributePanel" max="32767" attributes="1"/>
-                          <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="BlockPanel" min="-2" max="-2" attributes="1"/>
-                              <Component id="LayerPanel" alignment="0" max="32767" attributes="1"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="60" pref="60" max="60" attributes="0"/>
+                              <Component id="jSeparator3" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                           </Group>
+                          <Component id="BlockPanel" min="-2" max="-2" attributes="0"/>
+                          <Component id="AttributePanel" min="-2" max="-2" attributes="0"/>
+                          <Component id="LayerPanel" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jSeparator3" min="-2" pref="10" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="fieldPanel" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -400,24 +400,6 @@
           <SubComponents>
             <Component class="javax.swing.JSeparator" name="jSeparator3">
             </Component>
-            <Container class="stargate.FieldPanel" name="fieldPanel">
-              <Events>
-                <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="placeBlock"/>
-              </Events>
-
-              <Layout>
-                <DimensionLayout dim="0">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="806" max="32767" attributes="0"/>
-                  </Group>
-                </DimensionLayout>
-                <DimensionLayout dim="1">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="351" max="32767" attributes="0"/>
-                  </Group>
-                </DimensionLayout>
-              </Layout>
-            </Container>
             <Container class="javax.swing.JPanel" name="BlockPanel">
 
               <Layout>
@@ -501,6 +483,9 @@
                       <Image iconType="3" name="/stargate/images/stargateBlock_selected.jpg"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BlockTypSelected"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JToggleButton" name="portalBlock">
                   <Properties>
@@ -530,6 +515,9 @@
                       <Image iconType="3" name="/stargate/images/portalBlock_selected.jpg"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BlockTypSelected"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JToggleButton" name="airBlock">
                   <Properties>
@@ -559,6 +547,9 @@
                       <Image iconType="3" name="/stargate/images/airBlock_selected.jpg"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BlockTypSelected"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JToggleButton" name="redstoneGateActivatedBlock">
                   <Properties>
@@ -812,72 +803,99 @@
                     <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                       <ComponentRef name="layers"/>
                     </Property>
-                    <Property name="name" type="java.lang.String" value="Layer#10" noResource="true"/>
+                    <Property name="name" type="java.lang.String" value="9" noResource="true"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="layerSelected"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JToggleButton" name="Layer9">
                   <Properties>
                     <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                       <ComponentRef name="layers"/>
                     </Property>
-                    <Property name="name" type="java.lang.String" value="Layer#9" noResource="true"/>
+                    <Property name="name" type="java.lang.String" value="8" noResource="true"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="layerSelected"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JToggleButton" name="Layer8">
                   <Properties>
                     <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                       <ComponentRef name="layers"/>
                     </Property>
-                    <Property name="name" type="java.lang.String" value="Layer#8" noResource="true"/>
+                    <Property name="name" type="java.lang.String" value="7" noResource="true"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="layerSelected"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JToggleButton" name="Layer7">
                   <Properties>
                     <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                       <ComponentRef name="layers"/>
                     </Property>
-                    <Property name="name" type="java.lang.String" value="Layer#7" noResource="true"/>
+                    <Property name="name" type="java.lang.String" value="6" noResource="true"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="layerSelected"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JToggleButton" name="Layer6">
                   <Properties>
                     <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                       <ComponentRef name="layers"/>
                     </Property>
-                    <Property name="name" type="java.lang.String" value="Layer#6" noResource="true"/>
+                    <Property name="name" type="java.lang.String" value="5" noResource="true"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="layerSelected"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JToggleButton" name="Layer5">
                   <Properties>
                     <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                       <ComponentRef name="layers"/>
                     </Property>
-                    <Property name="name" type="java.lang.String" value="Layer#5" noResource="true"/>
+                    <Property name="name" type="java.lang.String" value="4" noResource="true"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="layerSelected"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JToggleButton" name="Layer4">
                   <Properties>
                     <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                       <ComponentRef name="layers"/>
                     </Property>
-                    <Property name="name" type="java.lang.String" value="Layer#4" noResource="true"/>
+                    <Property name="name" type="java.lang.String" value="3" noResource="true"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="layerSelected"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JToggleButton" name="Layer3">
                   <Properties>
                     <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                       <ComponentRef name="layers"/>
                     </Property>
-                    <Property name="name" type="java.lang.String" value="Layer#3" noResource="true"/>
+                    <Property name="name" type="java.lang.String" value="2" noResource="true"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="layerSelected"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JToggleButton" name="Layer2">
                   <Properties>
                     <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                       <ComponentRef name="layers"/>
                     </Property>
-                    <Property name="name" type="java.lang.String" value="Layer#2" noResource="true"/>
+                    <Property name="name" type="java.lang.String" value="1" noResource="true"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="layerSelected"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JToggleButton" name="Layer1">
                   <Properties>
@@ -885,8 +903,11 @@
                       <ComponentRef name="layers"/>
                     </Property>
                     <Property name="selected" type="boolean" value="true"/>
-                    <Property name="name" type="java.lang.String" value="Layer#1" noResource="true"/>
+                    <Property name="name" type="java.lang.String" value="0" noResource="true"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="layerSelected"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
@@ -946,10 +967,10 @@
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="irisActivationSwitch" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="14" max="32767" attributes="0"/>
+                          <EmptySpace pref="13" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace pref="79" max="32767" attributes="0"/>
+                          <EmptySpace pref="78" max="32767" attributes="0"/>
                           <Component id="saveAttributesButton" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
@@ -1057,6 +1078,24 @@
                   </Events>
                 </Component>
               </SubComponents>
+            </Container>
+            <Container class="stargate.FieldPanel" name="fieldPanel">
+              <Events>
+                <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="placeBlock"/>
+              </Events>
+
+              <Layout>
+                <DimensionLayout dim="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <EmptySpace min="0" pref="806" max="32767" attributes="0"/>
+                  </Group>
+                </DimensionLayout>
+                <DimensionLayout dim="1">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <EmptySpace min="0" pref="356" max="32767" attributes="0"/>
+                  </Group>
+                </DimensionLayout>
+              </Layout>
             </Container>
           </SubComponents>
         </Container>

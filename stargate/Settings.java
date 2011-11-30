@@ -59,7 +59,7 @@ public class Settings {
 
     private int light_ticks = 2;
 
-    private TreeMap<String, String> layer;
+//    private TreeMap<String, String> layer = new TreeMap<String, String>();
 
     public void setGateName(String s) {
         gatename = s;
@@ -93,9 +93,9 @@ public class Settings {
         light_ticks = i;
     }
 
-    public void setLayers(TreeMap<String, String> l) {
-        layer = l;
-    }
+//    public void setLayers(TreeMap<String, String> l) {
+//        layer = l;
+//    }
 
     public String getActive_material() {
         return active_material;
@@ -160,57 +160,8 @@ public class Settings {
     @Override
     public String toString() {
 
-        String returnString = "# The name for this shape\n"
-                            + "Name=" + gatename + "\n";
-        returnString = returnString.concat("# Version 2 of shape files allows for many new things.\n"
-                                         + "# 3D gates, new format for blocks, woosh and light order etc.\n");
+        String returnString = "Name=" + gatename + "\n";
         returnString = returnString.concat("Version=2\n\n");
-        returnString = returnString.concat("# GateShape now needs 'Layer' lines\n"
-                    + "# Each Layer requires a #number= and then a newline.\n"
-                    + "# Blocks can only be placed into layers.\n"
-                    + "# a 2D gate would have only 1 layer.\n"
-                    + "# Acceptable blocks are:\n"
-                    + "#    [I] = Ignored\n"
-                    + "#    [S] = Stargate Material\n"
-                    + "#    [P] = Air blocks that will turn into the portal material when activated.\n"
-                    + "\n"
-                    + "#    Extra parameters:\n"
-                    + "#	--- These parameters are 1 of each per gate ---\n"
-                    + "#    :N = Block where the name sign will be created. This is optional.\n"
-                    + "#    :EP = Block where players teleport in at. The players feet will be on this block.\n"
-                    + "#    :EM = Block where minecarts teleport in at. The minecart wheels will be on this block.\n"
-                    + "#    :A = Block where the activation switch is attached to. 1 per gate!\n"
-                    + "#			The only restriction is that the block that faces it must be 'I' (so nothing is in the way)\n"
-                    + "#			The switch will face in the positive layer direction.\n"
-                    + "#			In this example the switch will face towards where layer 3 would be (if there was a 3rd layer)\n"
-                    + "#    :D = Block the sign dialer hangs from. Only 1 per gate!\n"
-                    + "#			The only restriction is that the block that faces it must be 'I' (so nothing is in the way)\n"
-                    + "#			This block is not required, so shapes with this block can be either type. (sign or dial)\n"
-                    + "#			Without this block a gateshape can only be /dial gate.\n"
-                    + "#    :IA = Iris Activation Switch - Not required unless you want to be able to place an Iris on the gate.\n"
-                    + "#\n"
-                    + "#    IA, D, N, and A cannot be the same block, and none of those can contain W\n"
-                    + "#\n"
-                    + "#	--- There can be many of these per gate -- (Currently no restriction)\n"
-                    + "#    :L = Blocks that will light when gate is activated\n"
-                    + "#		Optionally you may add a #number after L to indicate the order it lights.\n"
-                    + "#		Defaults to 1 if there is no #\n"
-                    + "#    :W = Blocks that will woosh when gate is activated\n"
-                    + "#		Optionally you may add a #number after W to indicate the order it wooshes in.\n"
-                    + "#		Defaults to 1 if there is no # and the wait between numbers is configurable below.\n"
-                    + "#		After all #s are active it removes them in reverse order but\n"
-                    + "#		if a block is [P:W]	the block will stay as portal material until gate is shutdown.\n"
-                    + "#\n"
-                    + "#    Redstone Blocks:\n"
-                    + "#   --- There can only be 1 of each of these per gate, and they can-not occupy the same block as anything else ---\n"
-                    + "#    [RD] = Redstone activation block. A redstone charge next to this block will activate the gate.\n"
-                    + "#			This block requires a :D block for targetting. This block should be on top of a [S] block.\n"
-                    + "#    [RS] = Redstone sign dialer cycle block. A redstone charge next to this block will cycle sign targets.\n"
-                    + "#			This block requires a :D block for targetting. This block should be on top of a [S] block.\n"
-                    + "#    [RA] = Redstone gate Activated block. This block will provide redstone charge when the gate is activated.\n"
-                    + "#           This block should be on top of a [S] block.\n\n");
-
-        returnString = returnString.concat("Gateshape=\n");
         returnString = returnString.concat("WOOSH_TICKS=" + woosh_ticks + "\n");
         returnString = returnString.concat("LIGHT_TICKS=" + light_ticks + "\n");
         returnString = returnString.concat("PORTAL_MATERIAL=" + portal_material + "\n");

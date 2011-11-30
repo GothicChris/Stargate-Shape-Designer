@@ -14,12 +14,12 @@ public class Field {
     /**
      * Anzahl Spalten.
      */
-    private int columns;
+    public static int columns;
     
     /**
      * Anzahl Zeilen.
      */
-    private int rows;
+    public static int rows;
     
     /**
      * Alle Blöcke auf dem Feld.
@@ -38,34 +38,23 @@ public class Field {
         columns = STANDARDCOLUMNS;
         rows = STANDARDROWS;
         
-        blockElement = new BlockElement[rows][columns];
+        blockElement = new BlockElement[rows][columns];     
     }
 
-    /**
-     * Neues Feld erzeugen mit einer gegebenen Breite und Höhe.
-     * @param columns Anzahl Spalten.
-     * @param rows Anzahl Zeilen.
-     */
-    public Field(int columns, int rows) {
-        this.columns = columns;
-        this.rows = rows;
-        
-        blockElement =  new BlockElement[rows][columns];
-    }
 
     /**
      * Setzt die Anzahl der Spalten neu.
      * @param columns Anzahl Spalten.
      */
-    public void setColumns(int columns) {
-        this.columns = columns;
+    public static void setColumns(int columns) {
+        Field.columns = columns;
     }
 
     /**
      * Gibt die Anzahl der Spalten zurück.
      * @return Anzahl Spalten.
      */
-    public int getColumns() {
+    public static int getColumns() {
         return columns;
     }
 
@@ -73,15 +62,15 @@ public class Field {
      * Setzt die Anzahl der Zeilen neu.
      * @param rows Anzahl Zeilen.
      */
-    public void setRows(int rows) {
-        this.rows = rows;
+    public static void setRows(int rows) {
+        Field.rows = rows;
     }
 
     /**
      * Gibt die Anzahl der Reihen zurück.
      * @return Anzahl Zeilen.
      */
-    public int getRows() {
+    public static int getRows() {
         return rows;
     }
 
@@ -125,4 +114,19 @@ public class Field {
     public void initBlocks() {
         blockElement = new BlockElement[rows][columns];
     }
+
+    @Override
+    public String toString() {
+        String returnString = "";
+        for(int y = 0; y < rows; y++) {
+            for(int x = 0; x < columns; x++) {
+                returnString = returnString.concat(blockElement[y][x].toString());
+            }
+            returnString = returnString.concat("\n");
+        }
+        
+        return returnString;
+    }
+    
+    
 }

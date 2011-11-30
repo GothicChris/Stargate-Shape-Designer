@@ -14,7 +14,6 @@ package stargate;
 import classes.AirBlock;
 import classes.BlockElement;
 import classes.Field;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -28,7 +27,12 @@ public class FieldPanel extends javax.swing.JPanel {
     /** Creates new form FieldPanel */
     public FieldPanel() {
         initComponents();
-        field = new Field();
+        field = new Field[] {new Field(), new Field(),
+                             new Field(), new Field(),
+                             new Field(), new Field(),
+                             new Field(), new Field(),
+                             new Field(), new Field()};
+        currentLayer = 0;
         initFieldElements();
     }
 
@@ -64,10 +68,10 @@ public class FieldPanel extends javax.swing.JPanel {
          * von der Anzahl der Spalten und Zeilen und der jeweils verfuegbaren
          * Hoehe und Breite des Panels.
          */
-        int heightBlockSize = this.getHeight() / field.getRows();
-        int widthBlockSize = this.getWidth() / field.getColumns();
+        int heightBlockSize = this.getHeight() / Field.rows;
+        int widthBlockSize = this.getWidth() / Field.columns;
 
-        int blockSize = (heightBlockSize * field.getColumns() > getWidth())
+        int blockSize = (heightBlockSize * Field.columns > getWidth())
                 ? widthBlockSize : heightBlockSize;
 
         setBlocksize(blockSize);
@@ -75,12 +79,12 @@ public class FieldPanel extends javax.swing.JPanel {
         Point startPoint = new Point(0, 0);
 
 
-        for(int i = 0; i < field.getRows(); i++) {
+        for(int i = 0; i < Field.rows; i++) {
 
             startPoint.x = 0;
 
-            for(int j = 0; j < field.getColumns(); j++) {
-                BlockElement block = field.getBlockElement(j, i);
+            for(int j = 0; j < Field.columns; j++) {
+                BlockElement block = field[currentLayer].getBlockElement(j, i);
                 graphics.setColor(block.getColor());
                 graphics.fillRect(startPoint.x, startPoint.y,
                         blockSize, blockSize);
@@ -97,13 +101,15 @@ public class FieldPanel extends javax.swing.JPanel {
     }
 
     public void initFieldElements(int columns, int rows) {
-        field.setRows(rows);
-        field.setColumns(columns);
-        field.initBlocks();
 
-        for(int i = 0; i < rows; i++) {
-            for(int j = 0; j < columns; j++) {
-                field.setBlockElement(new AirBlock(), j, i);
+        Field.rows = rows;
+        Field.columns = columns;
+        for(int layer = 0; layer < 10; layer++) {
+            field[layer].initBlocks();
+            for(int i = 0; i < rows; i++) {
+                for(int j = 0; j < columns; j++) {
+                    field[layer].setBlockElement(new AirBlock(), j, i);
+                }
             }
         }
         repaint();
@@ -113,13 +119,7 @@ public class FieldPanel extends javax.swing.JPanel {
         initFieldElements(Field.STANDARDCOLUMNS, Field.STANDARDROWS);
     }
 
-
-    private Field field;
-    private int blocksize;
     
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    // End of variables declaration//GEN-END:variables
-
     public void setBlocksize(int blocksize) {
         this.blocksize = blocksize;
     }
@@ -129,15 +129,42 @@ public class FieldPanel extends javax.swing.JPanel {
     }
     
     public void setBlockElement(BlockElement blockelement, int column, int row) {
-        field.setBlockElement(blockelement, column, row);
+        field[currentLayer].setBlockElement(blockelement, column, row);
         repaint();
     }
 
     public BlockElement getBlockElement(int column, int row) {
-        return field.getBlockElement(column, row);
+        return field[currentLayer].getBlockElement(column, row);
     }
 
-    public void setBlockElementBorderColor() {
-        
+    public void setCurrentLayer(int currentLayer) {
+        this.currentLayer = currentLayer;
+//        initFieldElements();
+        repaint();
     }
+
+    public int getCurrentLayer() {
+        return currentLayer;
+    }
+
+    @Override
+    public String toString() {
+        String returnString = "GateShape=\n";
+        for(int i = 0; i < 10; i++) {
+            returnString = returnString.concat("Layer#" + (i + 1) + "\n");
+            returnString = returnString.concat(field[i].toString());
+            returnString = returnString.concat("\n\n");
+        }
+        return returnString;
+    }
+
+    
+    
+    private int currentLayer;
+    private Field field[];
+    private int blocksize;
+    
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    // End of variables declaration//GEN-END:variables
+
 }

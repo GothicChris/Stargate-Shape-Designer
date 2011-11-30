@@ -6,7 +6,6 @@ import classes.BlockAttribute;
 import classes.BlockElement;
 import classes.Field;
 import classes.NumerableBlockAttribute;
-import classes.StargateBlock;
 import java.awt.Color;
 import java.awt.Point;
 import java.util.Enumeration;
@@ -39,6 +38,14 @@ public class StargateShapeDesigner extends javax.swing.JFrame {
         initComponents();
         stargateSettings = new Settings();
         setAttributePanelVisibility(false, null);
+//        availableAttributes = new HashMap<String, Boolean>();
+//        availableAttributes.put("D", true);
+//        availableAttributes.put("N", true);
+//        availableAttributes.put("I", true);
+//        availableAttributes.put("A", true);
+//        availableAttributes.put("IA", true);
+//        availableAttributes.put("EP", true);
+//        availableAttributes.put("EM", true);
     }
 
     /** This method is called from within the constructor to
@@ -78,7 +85,6 @@ public class StargateShapeDesigner extends javax.swing.JFrame {
         OKButton = new javax.swing.JButton();
         ZeichenPanel = new javax.swing.JPanel();
         jSeparator3 = new javax.swing.JSeparator();
-        fieldPanel = new stargate.FieldPanel();
         BlockPanel = new javax.swing.JPanel();
         stargateBlock = new javax.swing.JToggleButton();
         portalBlock = new javax.swing.JToggleButton();
@@ -118,12 +124,12 @@ public class StargateShapeDesigner extends javax.swing.JFrame {
         light = new javax.swing.JCheckBox();
         lightNumber = new javax.swing.JTextField();
         saveAttributesButton = new javax.swing.JButton();
+        fieldPanel = new stargate.FieldPanel();
         LayerText = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         TextArea = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setResizable(false);
 
         EinstellungenTab.setName("Layer#1"); // NOI18N
         EinstellungenTab.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -138,7 +144,7 @@ public class StargateShapeDesigner extends javax.swing.JFrame {
 
         light_ticks_label.setText("Light - Ticks");
 
-        woosh_ticks.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0", "1", "2", "3", "4", "5", " " }));
+        woosh_ticks.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0", "1", "2", "3", "4", "5" }));
         woosh_ticks.setSelectedIndex(3);
 
         light_ticks.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0", "1", "2", "3", "4", "5" }));
@@ -282,23 +288,6 @@ public class StargateShapeDesigner extends javax.swing.JFrame {
 
         ZeichenPanel.setPreferredSize(new java.awt.Dimension(820, 500));
 
-        fieldPanel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                placeBlock(evt);
-            }
-        });
-
-        javax.swing.GroupLayout fieldPanelLayout = new javax.swing.GroupLayout(fieldPanel);
-        fieldPanel.setLayout(fieldPanelLayout);
-        fieldPanelLayout.setHorizontalGroup(
-            fieldPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 806, Short.MAX_VALUE)
-        );
-        fieldPanelLayout.setVerticalGroup(
-            fieldPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 351, Short.MAX_VALUE)
-        );
-
         blocks.add(stargateBlock);
         stargateBlock.setForeground(new java.awt.Color(255, 255, 255));
         stargateBlock.setIcon(new javax.swing.ImageIcon(getClass().getResource("/stargate/images/stargateBlock.jpg"))); // NOI18N
@@ -309,6 +298,11 @@ public class StargateShapeDesigner extends javax.swing.JFrame {
         stargateBlock.setPreferredSize(new java.awt.Dimension(40, 40));
         stargateBlock.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/stargate/images/stargateBlock_selected.jpg"))); // NOI18N
         stargateBlock.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/stargate/images/stargateBlock_selected.jpg"))); // NOI18N
+        stargateBlock.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BlockTypSelected(evt);
+            }
+        });
 
         blocks.add(portalBlock);
         portalBlock.setIcon(new javax.swing.ImageIcon(getClass().getResource("/stargate/images/portalBlock.jpg"))); // NOI18N
@@ -319,6 +313,11 @@ public class StargateShapeDesigner extends javax.swing.JFrame {
         portalBlock.setPreferredSize(new java.awt.Dimension(40, 40));
         portalBlock.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/stargate/images/portalBlock_selected.jpg"))); // NOI18N
         portalBlock.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/stargate/images/portalBlock_selected.jpg"))); // NOI18N
+        portalBlock.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BlockTypSelected(evt);
+            }
+        });
 
         blocks.add(airBlock);
         airBlock.setIcon(new javax.swing.ImageIcon(getClass().getResource("/stargate/images/airBlock.jpg"))); // NOI18N
@@ -329,6 +328,11 @@ public class StargateShapeDesigner extends javax.swing.JFrame {
         airBlock.setPreferredSize(new java.awt.Dimension(40, 40));
         airBlock.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/stargate/images/airBlock_selected.jpg"))); // NOI18N
         airBlock.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/stargate/images/airBlock_selected.jpg"))); // NOI18N
+        airBlock.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BlockTypSelected(evt);
+            }
+        });
 
         blocks.add(redstoneGateActivatedBlock);
         redstoneGateActivatedBlock.setIcon(new javax.swing.ImageIcon(getClass().getResource("/stargate/images/redstoneGateActivatedBlock.jpg"))); // NOI18N
@@ -428,35 +432,85 @@ public class StargateShapeDesigner extends javax.swing.JFrame {
         jLabel10.setText("10");
 
         layers.add(Layer10);
-        Layer10.setName("Layer#10"); // NOI18N
+        Layer10.setName("9"); // NOI18N
+        Layer10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                layerSelected(evt);
+            }
+        });
 
         layers.add(Layer9);
-        Layer9.setName("Layer#9"); // NOI18N
+        Layer9.setName("8"); // NOI18N
+        Layer9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                layerSelected(evt);
+            }
+        });
 
         layers.add(Layer8);
-        Layer8.setName("Layer#8"); // NOI18N
+        Layer8.setName("7"); // NOI18N
+        Layer8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                layerSelected(evt);
+            }
+        });
 
         layers.add(Layer7);
-        Layer7.setName("Layer#7"); // NOI18N
+        Layer7.setName("6"); // NOI18N
+        Layer7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                layerSelected(evt);
+            }
+        });
 
         layers.add(Layer6);
-        Layer6.setName("Layer#6"); // NOI18N
+        Layer6.setName("5"); // NOI18N
+        Layer6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                layerSelected(evt);
+            }
+        });
 
         layers.add(Layer5);
-        Layer5.setName("Layer#5"); // NOI18N
+        Layer5.setName("4"); // NOI18N
+        Layer5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                layerSelected(evt);
+            }
+        });
 
         layers.add(Layer4);
-        Layer4.setName("Layer#4"); // NOI18N
+        Layer4.setName("3"); // NOI18N
+        Layer4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                layerSelected(evt);
+            }
+        });
 
         layers.add(Layer3);
-        Layer3.setName("Layer#3"); // NOI18N
+        Layer3.setName("2"); // NOI18N
+        Layer3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                layerSelected(evt);
+            }
+        });
 
         layers.add(Layer2);
-        Layer2.setName("Layer#2"); // NOI18N
+        Layer2.setName("1"); // NOI18N
+        Layer2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                layerSelected(evt);
+            }
+        });
 
         layers.add(Layer1);
         Layer1.setSelected(true);
-        Layer1.setName("Layer#1"); // NOI18N
+        Layer1.setName("0"); // NOI18N
+        Layer1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                layerSelected(evt);
+            }
+        });
 
         javax.swing.GroupLayout LayerPanelLayout = new javax.swing.GroupLayout(LayerPanel);
         LayerPanel.setLayout(LayerPanelLayout);
@@ -663,42 +717,61 @@ public class StargateShapeDesigner extends javax.swing.JFrame {
                     .addComponent(lightNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(irisActivationSwitch)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AttributePanelLayout.createSequentialGroup()
-                .addContainerGap(79, Short.MAX_VALUE)
+                .addContainerGap(78, Short.MAX_VALUE)
                 .addComponent(saveAttributesButton)
                 .addContainerGap())
+        );
+
+        fieldPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                placeBlock(evt);
+            }
+        });
+
+        javax.swing.GroupLayout fieldPanelLayout = new javax.swing.GroupLayout(fieldPanel);
+        fieldPanel.setLayout(fieldPanelLayout);
+        fieldPanelLayout.setHorizontalGroup(
+            fieldPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 806, Short.MAX_VALUE)
+        );
+        fieldPanelLayout.setVerticalGroup(
+            fieldPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 356, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout ZeichenPanelLayout = new javax.swing.GroupLayout(ZeichenPanel);
         ZeichenPanel.setLayout(ZeichenPanelLayout);
         ZeichenPanelLayout.setHorizontalGroup(
             ZeichenPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ZeichenPanelLayout.createSequentialGroup()
+            .addGroup(ZeichenPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(ZeichenPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, ZeichenPanelLayout.createSequentialGroup()
+                .addGroup(ZeichenPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(ZeichenPanelLayout.createSequentialGroup()
                         .addComponent(BlockPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(AttributePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(AttributePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
                         .addComponent(LayerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 806, Short.MAX_VALUE)
-                    .addComponent(fieldPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(fieldPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         ZeichenPanelLayout.setVerticalGroup(
             ZeichenPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(ZeichenPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(ZeichenPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(AttributePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(ZeichenPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(BlockPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(LayerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(ZeichenPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(ZeichenPanelLayout.createSequentialGroup()
+                        .addGap(60, 60, 60)
+                        .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addComponent(BlockPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(AttributePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(LayerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(fieldPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -759,7 +832,10 @@ public class StargateShapeDesigner extends javax.swing.JFrame {
 
 
     private void include_textArea(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_include_textArea
-        TextArea.setText(stargateSettings.toString());
+        String text = "";
+        text = text.concat(stargateSettings.toString());
+        text = text.concat(fieldPanel.toString());
+        TextArea.setText(text);
     }//GEN-LAST:event_include_textArea
 
 private void placeBlock(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_placeBlock
@@ -819,10 +895,18 @@ private void placeBlock(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_placeB
                             JRadioButton attributeButton = (JRadioButton) em.nextElement();
                             if(attributeButton.getName().equals(name)) {
                                 attributeButton.setSelected(true);
+                                
                             }
                         }
                     }
                     
+                }
+            } else {
+                stargateBlockAttributes.clearSelection();
+                Enumeration em = stargateBlockAttributes.getElements();
+                while(em.hasMoreElements()) {
+                    JRadioButton attributeButton = (JRadioButton) em.nextElement();
+//                    attributeButton.setEnabled(availableAttributes.get(attributeButton.getName()));
                 }
             }
             
@@ -882,10 +966,31 @@ private void arAttributeInBlockElement(java.awt.event.ItemEvent evt) {//GEN-FIRS
     JRadioButton radiobutton = (JRadioButton) evt.getSource();
     if(radiobutton.isSelected()) {
         ((AttributedBlockElement)currentSelectedBlockElement).putAttribute(new BlockAttribute(radiobutton.getName()));
+//        availableAttributes.put(radiobutton.getName(), false);
+//        System.out.println(availableAttributes.toString());
     } else {
         ((AttributedBlockElement)currentSelectedBlockElement).removeAttribute(radiobutton.getName());
+//        availableAttributes.put(radiobutton.getName(), true);
     }
 }//GEN-LAST:event_arAttributeInBlockElement
+
+private void BlockTypSelected(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BlockTypSelected
+// TODO add your handling code here:
+    if(((JToggleButton)evt.getSource()).isSelected()) {
+        setAttributePanelVisibility(false, null);
+        if((Color.yellow).equals(currentSelectedBlockElement.getBorderColor())) {
+            currentSelectedBlockElement.setBorderColor(Color.BLACK);
+            fieldPanel.repaint();
+            System.out.println("repaint");
+        }
+    }
+}//GEN-LAST:event_BlockTypSelected
+
+    private void layerSelected(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_layerSelected
+        // TODO add your handling code here:
+        fieldPanel.setCurrentLayer(Integer.parseInt(((JToggleButton)evt.getSource()).getName()));
+        System.out.println(fieldPanel.getCurrentLayer());
+    }//GEN-LAST:event_layerSelected
 
     private String getSelectedButtonName(ButtonGroup bg) {
         
@@ -921,6 +1026,8 @@ private void arAttributeInBlockElement(java.awt.event.ItemEvent evt) {//GEN-FIRS
     private Settings stargateSettings;
     
     private BlockElement currentSelectedBlockElement = new AirBlock();
+    
+    private HashMap<String, Boolean> availableAttributes;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel AttributePanel;
