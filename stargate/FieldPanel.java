@@ -78,7 +78,6 @@ public class FieldPanel extends javax.swing.JPanel {
 
         Point startPoint = new Point(0, 0);
 
-
         for(int i = 0; i < Field.rows; i++) {
 
             startPoint.x = 0;
@@ -119,6 +118,9 @@ public class FieldPanel extends javax.swing.JPanel {
         initFieldElements(Field.STANDARDCOLUMNS, Field.STANDARDROWS);
     }
 
+    public Field[] getField() {
+        return field;
+    }
     
     public void setBlocksize(int blocksize) {
         this.blocksize = blocksize;

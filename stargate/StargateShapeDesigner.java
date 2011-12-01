@@ -128,6 +128,7 @@ public class StargateShapeDesigner extends javax.swing.JFrame {
         LayerText = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         TextArea = new javax.swing.JTextArea();
+        shapePreviewPanel = new stargate.ShapePreviewPanel(fieldPanel.getField());
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -201,7 +202,7 @@ public class StargateShapeDesigner extends javax.swing.JFrame {
                         .addContainerGap())
                     .addGroup(OptionenPanelLayout.createSequentialGroup()
                         .addComponent(light_material_label)
-                        .addContainerGap(752, Short.MAX_VALUE))
+                        .addContainerGap(787, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, OptionenPanelLayout.createSequentialGroup()
                         .addGroup(OptionenPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 323, Short.MAX_VALUE)
@@ -239,7 +240,7 @@ public class StargateShapeDesigner extends javax.swing.JFrame {
                         .addGap(284, 284, 284))
                     .addGroup(OptionenPanelLayout.createSequentialGroup()
                         .addComponent(jButton4)
-                        .addContainerGap(671, Short.MAX_VALUE))))
+                        .addContainerGap(706, Short.MAX_VALUE))))
         );
         OptionenPanelLayout.setVerticalGroup(
             OptionenPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -734,7 +735,7 @@ public class StargateShapeDesigner extends javax.swing.JFrame {
         fieldPanel.setLayout(fieldPanelLayout);
         fieldPanelLayout.setHorizontalGroup(
             fieldPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 806, Short.MAX_VALUE)
+            .addGap(0, 841, Short.MAX_VALUE)
         );
         fieldPanelLayout.setVerticalGroup(
             fieldPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -754,7 +755,7 @@ public class StargateShapeDesigner extends javax.swing.JFrame {
                         .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(AttributePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                         .addComponent(LayerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(fieldPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -764,10 +765,7 @@ public class StargateShapeDesigner extends javax.swing.JFrame {
             .addGroup(ZeichenPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(ZeichenPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(ZeichenPanelLayout.createSequentialGroup()
-                        .addGap(60, 60, 60)
-                        .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BlockPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(AttributePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(LayerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -787,7 +785,7 @@ public class StargateShapeDesigner extends javax.swing.JFrame {
         LayerText.setLayout(LayerTextLayout);
         LayerTextLayout.setHorizontalGroup(
             LayerTextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 826, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 861, Short.MAX_VALUE)
         );
         LayerTextLayout.setVerticalGroup(
             LayerTextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -795,6 +793,19 @@ public class StargateShapeDesigner extends javax.swing.JFrame {
         );
 
         EinstellungenTab.addTab("Text", LayerText);
+
+        javax.swing.GroupLayout shapePreviewPanelLayout = new javax.swing.GroupLayout(shapePreviewPanel);
+        shapePreviewPanel.setLayout(shapePreviewPanelLayout);
+        shapePreviewPanelLayout.setHorizontalGroup(
+            shapePreviewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 861, Short.MAX_VALUE)
+        );
+        shapePreviewPanelLayout.setVerticalGroup(
+            shapePreviewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 508, Short.MAX_VALUE)
+        );
+
+        EinstellungenTab.addTab("3D Ansicht", shapePreviewPanel);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -1090,6 +1101,7 @@ private void BlockTypSelected(java.awt.event.ActionEvent evt) {//GEN-FIRST:event
     private javax.swing.JToggleButton redstoneSignBlock;
     private javax.swing.JCheckBox redstone_activated;
     private javax.swing.JButton saveAttributesButton;
+    private stargate.ShapePreviewPanel shapePreviewPanel;
     private javax.swing.JRadioButton signDialer;
     private javax.swing.JRadioButton signName;
     private javax.swing.JToggleButton stargateBlock;
