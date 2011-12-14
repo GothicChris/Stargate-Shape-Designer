@@ -14,12 +14,12 @@ public class Field {
     /**
      * Anzahl Spalten.
      */
-    public static int columns;
+    public static int columns = STANDARDCOLUMNS;
     
     /**
      * Anzahl Zeilen.
      */
-    public static int rows;
+    public static int rows = STANDARDROWS;
     
     /**
      * Alle Blöcke auf dem Feld.
@@ -35,8 +35,6 @@ public class Field {
      * Erzeugt ein neues Feld mit der Standardgroesse.
      */
     public Field() {
-        columns = STANDARDCOLUMNS;
-        rows = STANDARDROWS;
         
         blockElement = new BlockElement[rows][columns];     
     }

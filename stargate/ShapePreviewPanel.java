@@ -52,6 +52,11 @@ public class ShapePreviewPanel extends javax.swing.JPanel {
     protected void paintComponent(Graphics g) {
         Graphics2D graphics = (Graphics2D) g;
         super.paintComponent(graphics);
+        
+        drawPreview(graphics);
+    }
+    
+    private void drawPreview(Graphics2D graphics) {
 
         /*
          * Berechnung der Groesse der Blockelemente. Die Groesse ist abhaengig
@@ -61,7 +66,7 @@ public class ShapePreviewPanel extends javax.swing.JPanel {
         int heightBlockSize = this.getHeight() / Field.rows;
         int widthBlockSize = this.getWidth() / Field.columns;
 
-        int blockSize = (heightBlockSize * Field.columns > getWidth())
+        int blockSize = (heightBlockSize * Field.columns > this.getWidth())
                 ? widthBlockSize : heightBlockSize;
         
         blockSize = blockSize * 200 / 300;
