@@ -8,11 +8,19 @@ import classes.Field;
 import classes.NumerableBlockAttribute;
 import java.awt.Color;
 import java.awt.Point;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JToggleButton;
 
@@ -129,8 +137,15 @@ public class StargateShapeDesigner extends javax.swing.JFrame {
         shapePreviewPanel = new stargate.ShapePreviewPanel(fieldPanel.getField());
         LayerText = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        TextArea = new javax.swing.JTextArea();
+        ShapeAusgabe = new javax.swing.JTextArea();
+        exportShapeBtn = new javax.swing.JButton();
         shapePreviewPanelAdvanced1 = new stargate.ShapePreviewPanelAdvanced();
+        menue = new javax.swing.JMenuBar();
+        menueDatei = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        menueInfo = new javax.swing.JMenu();
+        menueAbout = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -284,7 +299,7 @@ public class StargateShapeDesigner extends javax.swing.JFrame {
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton4)
-                .addContainerGap(232, Short.MAX_VALUE))
+                .addContainerGap(239, Short.MAX_VALUE))
         );
 
         EinstellungenTab.addTab("Einstellungen", OptionenPanel);
@@ -741,7 +756,7 @@ public class StargateShapeDesigner extends javax.swing.JFrame {
         );
         fieldPanelLayout.setVerticalGroup(
             fieldPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 356, Short.MAX_VALUE)
+            .addGap(0, 363, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout ZeichenPanelLayout = new javax.swing.GroupLayout(ZeichenPanel);
@@ -786,7 +801,7 @@ public class StargateShapeDesigner extends javax.swing.JFrame {
         );
         shapePreviewPanelLayout.setVerticalGroup(
             shapePreviewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 486, Short.MAX_VALUE)
+            .addGap(0, 493, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout vorschau3DPanelLayout = new javax.swing.GroupLayout(vorschau3DPanel);
@@ -808,20 +823,35 @@ public class StargateShapeDesigner extends javax.swing.JFrame {
 
         EinstellungenTab.addTab("3D Ansicht", vorschau3DPanel);
 
-        TextArea.setColumns(20);
-        TextArea.setEditable(false);
-        TextArea.setRows(5);
-        jScrollPane1.setViewportView(TextArea);
+        ShapeAusgabe.setColumns(20);
+        ShapeAusgabe.setEditable(false);
+        ShapeAusgabe.setRows(5);
+        jScrollPane1.setViewportView(ShapeAusgabe);
+
+        exportShapeBtn.setText("exportieren als .shape");
+        exportShapeBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exportShape(evt);
+            }
+        });
 
         javax.swing.GroupLayout LayerTextLayout = new javax.swing.GroupLayout(LayerText);
         LayerText.setLayout(LayerTextLayout);
         LayerTextLayout.setHorizontalGroup(
             LayerTextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 826, Short.MAX_VALUE)
+            .addGroup(LayerTextLayout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 610, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(exportShapeBtn)
+                .addContainerGap(65, Short.MAX_VALUE))
         );
         LayerTextLayout.setVerticalGroup(
             LayerTextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 508, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 515, Short.MAX_VALUE)
+            .addGroup(LayerTextLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(exportShapeBtn)
+                .addContainerGap(481, Short.MAX_VALUE))
         );
 
         EinstellungenTab.addTab("Text", LayerText);
@@ -834,20 +864,54 @@ public class StargateShapeDesigner extends javax.swing.JFrame {
         );
         shapePreviewPanelAdvanced1Layout.setVerticalGroup(
             shapePreviewPanelAdvanced1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 508, Short.MAX_VALUE)
+            .addGap(0, 515, Short.MAX_VALUE)
         );
 
         EinstellungenTab.addTab("test", shapePreviewPanelAdvanced1);
+
+        menueDatei.setText("Datei");
+
+        jMenuItem1.setText("Speichern");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fileSave(evt);
+            }
+        });
+        menueDatei.add(jMenuItem1);
+
+        jMenuItem2.setText("Beenden");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fileClose(evt);
+            }
+        });
+        menueDatei.add(jMenuItem2);
+
+        menue.add(menueDatei);
+
+        menueInfo.setText("Info");
+
+        menueAbout.setText("About");
+        menueAbout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                openAbout(evt);
+            }
+        });
+        menueInfo.add(menueAbout);
+
+        menue.add(menueInfo);
+
+        setJMenuBar(menue);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(EinstellungenTab, javax.swing.GroupLayout.DEFAULT_SIZE, 831, Short.MAX_VALUE)
+            .addComponent(EinstellungenTab, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 831, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(EinstellungenTab, javax.swing.GroupLayout.DEFAULT_SIZE, 536, Short.MAX_VALUE)
+            .addComponent(EinstellungenTab, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 543, Short.MAX_VALUE)
         );
 
         pack();
@@ -878,7 +942,7 @@ public class StargateShapeDesigner extends javax.swing.JFrame {
         String text = "";
         text = text.concat(stargateSettings.toString());
         text = text.concat(fieldPanel.toString());
-        TextArea.setText(text);
+        ShapeAusgabe.setText(text);
     }//GEN-LAST:event_include_textArea
 
 private void placeBlock(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_placeBlock
@@ -1035,6 +1099,73 @@ private void BlockTypSelected(java.awt.event.ActionEvent evt) {//GEN-FIRST:event
         System.out.println(fieldPanel.getCurrentLayer());
     }//GEN-LAST:event_layerSelected
 
+    private void openAbout(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openAbout
+        // TODO add your handling code here:
+        JFrame aboutFrame = new About();
+        aboutFrame.setVisible(true);
+        aboutFrame.requestFocusInWindow();
+    }//GEN-LAST:event_openAbout
+
+    private void fileClose(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileClose
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_fileClose
+
+    private void fileSave(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileSave
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_fileSave
+
+    private void exportShape(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportShape
+        // TODO add your handling code here:
+        JFileChooser filechooser = new JFileChooser();
+        ShapeFileFilter shapeFilter = new ShapeFileFilter();
+        filechooser.addChoosableFileFilter(shapeFilter);
+        int dialogAnswer = filechooser.showSaveDialog(null);
+        
+        if(dialogAnswer == JFileChooser.APPROVE_OPTION) {
+            
+            FileWriter outFileWriter = null;
+            File saveFile = filechooser.getSelectedFile();
+            int overwriteAnswer = JOptionPane.YES_OPTION;
+            if(saveFile.exists()) {
+                overwriteAnswer = JOptionPane.showConfirmDialog(null, 
+                        "Datei existiert bereits.\n Überschreiben??",
+                        "Überschreiben?",
+                        JOptionPane.YES_NO_OPTION);
+                
+            }
+            if(overwriteAnswer == JOptionPane.YES_OPTION) {
+                
+                String shape = ShapeAusgabe.getText();
+                String filename = saveFile.getAbsolutePath();
+                
+                if(!filename.toUpperCase().endsWith(".SHAPE")) {
+                    filename += ".shape";
+                }
+                
+                try {
+                    outFileWriter = new FileWriter(filename);
+                    outFileWriter.write(shape);
+                    outFileWriter.flush();
+                    outFileWriter.close();
+                    JOptionPane.showMessageDialog(null, 
+                            "Shape Datei erfolgreich exportiert!",
+                            "Exportieren erfolgreich",
+                            JOptionPane.INFORMATION_MESSAGE);
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(null,
+                            "Fehler beim exportieren von" + filename + ".",
+                            "Fehler",
+                            JOptionPane.ERROR_MESSAGE);
+                } 
+            } else {
+                exportShape(evt);
+            }
+            
+        }
+    }//GEN-LAST:event_exportShape
+
     private String getSelectedButtonName(ButtonGroup bg) {
         
         String returnString = "";
@@ -1091,12 +1222,13 @@ private void BlockTypSelected(java.awt.event.ActionEvent evt) {//GEN-FIRST:event
     private javax.swing.JPanel LayerText;
     private javax.swing.JButton OKButton;
     private javax.swing.JPanel OptionenPanel;
-    private javax.swing.JTextArea TextArea;
+    private javax.swing.JTextArea ShapeAusgabe;
     private javax.swing.JPanel ZeichenPanel;
     private javax.swing.JRadioButton activationSwitch;
     private javax.swing.JComboBox active_material;
     private javax.swing.JToggleButton airBlock;
     private stargate.unselectedButtonGroup blocks;
+    private javax.swing.JButton exportShapeBtn;
     private javax.swing.JTextField fieldHeight;
     private stargate.FieldPanel fieldPanel;
     private javax.swing.JTextField fieldWidth;
@@ -1115,6 +1247,8 @@ private void BlockTypSelected(java.awt.event.ActionEvent evt) {//GEN-FIRST:event
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
@@ -1125,6 +1259,10 @@ private void BlockTypSelected(java.awt.event.ActionEvent evt) {//GEN-FIRST:event
     private javax.swing.JLabel light_material_label;
     private javax.swing.JComboBox light_ticks;
     private javax.swing.JLabel light_ticks_label;
+    private javax.swing.JMenuBar menue;
+    private javax.swing.JMenuItem menueAbout;
+    private javax.swing.JMenu menueDatei;
+    private javax.swing.JMenu menueInfo;
     private javax.swing.JToggleButton portalBlock;
     private javax.swing.JComboBox portal_material;
     private javax.swing.JLabel portal_material_label;
