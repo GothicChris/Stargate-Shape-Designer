@@ -5,7 +5,10 @@
 
 package stargate;
 
+import java.io.IOException;
 import java.util.TreeMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -177,4 +180,19 @@ public class Settings {
         return returnString;
     }
 
+    public boolean parseToFile(FileSaver saver) {
+        try {
+            saver.write("GateName=" + gatename + "\n");
+            saver.write("Woosh=" + woosh_ticks + "\n");
+            saver.write("Light=" + light_ticks + "\n");
+            saver.write("Portal=" + portal_material + "\n");
+            saver.write("Iris=" + iris_material + "\n");
+            saver.write("Stargate=" + stargate_material + "\n");
+            saver.write("Active=" + gatename + "\n");
+            saver.write("Redstone=" + is_redstone + "\n");
+            return true;
+        } catch (IOException ex) {
+            return false;
+        }
+    }
 }

@@ -7,6 +7,7 @@ import classes.BlockElement;
 import classes.Field;
 import classes.NumerableBlockAttribute;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Point;
 import java.io.File;
 import java.io.FileWriter;
@@ -1113,6 +1114,51 @@ private void BlockTypSelected(java.awt.event.ActionEvent evt) {//GEN-FIRST:event
 
     private void fileSave(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileSave
         // TODO add your handling code here:
+        //wird ersetzt XML Parser
+        JFileChooser filechooser = new JFileChooser();
+        SSDRFileFilter ssdfFiler = new SSDRFileFilter();
+        filechooser.addChoosableFileFilter(ssdfFiler);
+        int dialogAnswer = filechooser.showSaveDialog(null);
+        
+        if(dialogAnswer == JFileChooser.APPROVE_OPTION) {
+            File saveFile = filechooser.getSelectedFile();
+            
+            int overwriteAnswer = JOptionPane.YES_OPTION;
+            if(saveFile.exists()) {
+                overwriteAnswer = JOptionPane.showConfirmDialog(null, 
+                        "Datei existiert bereits.\n Überschreiben??",
+                        "Überschreiben?",
+                        JOptionPane.YES_NO_OPTION);
+            }
+            
+            if(overwriteAnswer == JOptionPane.YES_OPTION) {
+                
+                FileSaver saver = new FileSaver(saveFile);
+
+                if(saver != null) {
+                    try {
+                        saver.write("--- Stargate Shape Designer File ---\n");
+                        saver.write("--- Setting ---\n");
+                        stargateSettings.parseToFile(saver);
+                        saver.write("--- Field ---\n");
+                        saver.write("Hight=" + fieldHeight + "\n");
+                        saver.write("Width=" + fieldWidth + "\n");
+                        
+                        
+                    } catch (IOException ex) {
+                        JOptionPane.showMessageDialog(null, 
+                                "Fehler beim schreiben der Datei!",
+                                "Schreibfehler",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
+                    
+                }
+                
+            } else {
+                fileSave(evt);
+            }
+        }
+        
         
     }//GEN-LAST:event_fileSave
 
